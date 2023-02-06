@@ -1,0 +1,19 @@
+{
+    "autoload": {
+        "files": [
+            "src/reader.php",
+            "src/types.php"
+        ],
+        "psr-4": {
+            "mal\\": "src/"
+        }
+    },
+    "require-dev": {
+        "pestphp/pest": "^1.22"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}

@@ -5,17 +5,17 @@ declare(strict_types=1);
 
 namespace mal;
 
+use mal\reader\ReaderException;
 use mal\types\Type;
 
-require_once __DIR__.'/reader.php';
-require_once __DIR__.'/types.php';
+require_once __DIR__.'/vendor/autoload.php';
 
 const PROMPT = 'user> ';
 const HISTORY_FILE = '.mal_history';
 
 function read_line(string $line): Type
 {
-    return reader\read_str($line);
+    return reader\Parser::parse($line);
 }
 
 function eval_line(Type $ast): void
@@ -46,7 +46,11 @@ function repl(): void
             \readline_add_history($line);
         }
 
-        rep($line);
+        try {
+            rep($line);
+        } catch (ReaderException $e) {
+            echo "{$e->getMessage()}\n";
+        }
     }
 
     \readline_write_history($history_file);
